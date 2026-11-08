@@ -28,10 +28,11 @@ def exchange():
     base2_code = base2_combobox.get().strip()
     if target_code and base_code and base2_code:
         try:
+            # Запрос для первой базовой валюты
             response = requests.get(f'https://open.er-api.com/v6/latest/{base_code}')
             response.raise_for_status()
             data = response.json()
-
+            # Запрос для второй базовой валюты
             response2 = requests.get(f'https://open.er-api.com/v6/latest/{base2_code}')
             response2.raise_for_status()
             data2 = response2.json()
@@ -44,12 +45,11 @@ def exchange():
                 target = currencies[target_code]
 
                 mb.showinfo('Курс обмена',
-                            f'Курс: {exchange_rate:.1f} {target} за 1 {base}\n'
-                                    f'Курс: {exchange2_rate:.1f} {target} за 1 {base2}'
+                            f'Курс: {exchange_rate:.2f} {target} за 1 {base}\n'
+                                    f'Курс: {exchange2_rate:.2f} {target} за 1 {base2}'
                             )
             else:
-                mb.showerror('Ошибка',
-                            f'Валюта {target_code} не найдена')
+                mb.showerror('Ошибка', f'Валюта {target_code} не найдена')
         except Exception as er:
             mb.showerror('Ошибка', er)
     else:
@@ -72,9 +72,11 @@ currencies = {
 }
 
 root = Tk()
-root.title('Курс обмена валют USD')
-root.geometry('360x180')
+root.title('Курс обмена валют')
+root.geometry('360x280')
 
+
+# Первая базовая валюта
 Label(root, text='Базовая валюта').pack()
 base_combobox = ttk.Combobox(root, values=list(currencies.keys()))
 base_combobox.pack(pady=3, padx=10)
@@ -83,7 +85,7 @@ base_label = ttk.Label()
 base_label.pack()
 
 
-
+# Вторая базовая валюта
 Label(root, text='Вторая базовая валюта').pack()
 base2_combobox = ttk.Combobox(root, values=list(currencies.keys()))
 base2_combobox.pack(pady=3, padx=10)
@@ -92,6 +94,7 @@ base2_label = ttk.Label()
 base2_label.pack()
 
 
+# Целевая валюта
 Label(root, text='Целевая валюта' ).pack(padx=10)
 target_combobox = ttk.Combobox(root, values=list(currencies.keys()))
 target_combobox.pack(pady=3, padx=10)
@@ -99,8 +102,8 @@ target_combobox.bind('<<ComboboxSelected>>', update_currency_label)
 target_label = ttk.Label()
 target_label.pack()
 
-Button(text='Получить курс обмена к доллару',
-       command=exchange).pack(pady=10, padx=10)
+
+Button(text='Получить курс обмена', command=exchange).pack(pady=10, padx=10)
 
 
 root.mainloop()
