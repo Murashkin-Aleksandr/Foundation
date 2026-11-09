@@ -93,7 +93,7 @@ fiats = {
 color_bg = '#EAF6FF' # цвет фона
 
 root = Tk()
-root.title('Курс криптовалют')
+root.title('Курс обмена криптовалют')
 root.geometry('360x200')
 root.configure(bg=color_bg)
 
@@ -125,7 +125,7 @@ fiat_label = ttk.Label(background=color_bg)
 fiat_label.pack()
 
 Button(
-    text='Получить цену',
+    text='Получить курс обмена',
     command=exchange,
     bg='lightblue',
     activebackground='#000080',
