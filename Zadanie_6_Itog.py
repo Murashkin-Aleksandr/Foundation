@@ -1,23 +1,39 @@
-from tkinter import Tk, Label, Button # Импорт из tkinter: главное окно, текстовая метка, кнопка.
-from tkinter import messagebox as mb
-from tkinter import ttk
-import requests
-from io import BytesIO
-from PIL import Image, ImageTk
+from tkinter import Tk, Label, Button   # Импорт из tkinter: главное окно, текстовая метка, кнопка.
+from tkinter import messagebox as mb    # Импорт модуля диалоговых окон — для showinfo/showwarning/showerror.
+from tkinter import ttk                 # Импорт ttk — «тематизированных» виджетов (Combobox, Label с поддержкой стилей)
+import requests                         # Библиотека для HTTP-запросов к API CoinGecko и загрузки иконки.
+from io import BytesIO                  # BytesIO превращает байты (содержимое картинки) в файлоподобный объект.import
+                                        # Нужно, чтобы PIL.Image.open мог прочитать картинку из памяти, а не с диска.
+from PIL import Image, ImageTk          # Image — открытие/ресайз картинки;
+                                        # ImageTk — конвертация в формат, понятный Tkinter.
 
 
 def update_crypto_label(event):
+    """Обновляет метку под списком при выборе криптовалюты.
+    Tkinter вызывает функцию автоматически, когда пользователь выбирает монету в выпадающем списке:
+    - узнаёт, что именно выбрал пользователь;
+    - по этому коду находит в словаре currencies красивое название;
+    - записывает это название в метку под списком, чтобы пользователь его увидел.
+    """
     code = crypto_combobox.get()
     name = currencies[code]
     crypto_label.config(text=name)
-#   crypto_label.config(text=currencies[crypto_combobox.get()])
+    # Альтернативный однострочный вариант:
+    # crypto_label.config(text=currencies[crypto_combobox.get()])
 
 
 def update_fiat_label(event):
+    """Обновляет метку под списком при выборе валюты.
+    Tkinter вызывает функцию автоматически, когда пользователь выбирает валюту в выпадающем списке:
+    - узнаёт, что именно выбрал пользователь;
+    - по этому коду находит в словаре fiats красивое название;
+    - записывает это название в метку под списком, чтобы пользователь его увидел.
+    """
     code = fiat_combobox.get()
     name = fiats[code]
     fiat_label.config(text=name)
-#   fiat_label.config(text=fiats[fiat_combobox.get()])
+    #   Альтернативный однострочный вариант:
+    #   fiat_label.config(text=fiats[fiat_combobox.get()])
 
 
 def exchange():
