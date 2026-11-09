@@ -37,6 +37,9 @@ def update_fiat_label(event):
 
 
 def exchange():
+    """По клику на кнопку «Получить цену» запрашивает у CoinGecko курс выбранной криптовалюты
+    к выбранному фиату и показывает результат в диалоговом окне.
+    """
     crypto_id = crypto_combobox.get().strip()
     fiat_code = fiat_combobox.get().strip().lower()
 
@@ -85,14 +88,14 @@ fiats = {
     'kzt': 'Казахстанский тенге',
 }
 
-color_bg = '#EAF6FF'
+color_bg = '#EAF6FF' # цвет фона
 
 root = Tk()
 root.title('Курс криптовалют')
 root.geometry('360x200')
 root.configure(bg=color_bg)
 
-
+"""Иконка приложения"""
 icon_url = "https://cdn-icons-png.flaticon.com/512/4843/4843256.png"   # прямая ссылка на картинку
 try:
     response = requests.get(icon_url, timeout=5)
@@ -119,6 +122,12 @@ fiat_combobox.bind('<<ComboboxSelected>>', update_fiat_label)
 fiat_label = ttk.Label(background=color_bg)
 fiat_label.pack()
 
-Button(text='Получить цену', command=exchange, bg='lightblue', activebackground='darkblue').pack(pady=15, padx=10)
+Button(
+    text='Получить цену',
+    command=exchange,
+    bg='lightblue',
+    activebackground='darkblue',
+    activeforeground='white'
+).pack(pady=15, padx=10)
 
 root.mainloop()
