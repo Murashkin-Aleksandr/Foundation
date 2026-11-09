@@ -2,7 +2,7 @@ from tkinter import Tk, Label, Button   # Импорт из tkinter: главн�
 from tkinter import messagebox as mb    # Импорт модуля диалоговых окон — для showinfo/showwarning/showerror.
 from tkinter import ttk                 # Импорт ttk — «тематизированных» виджетов (Combobox, Label с поддержкой стилей)
 import requests                         # Библиотека для HTTP-запросов к API CoinGecko и загрузки иконки.
-from io import BytesIO                  # BytesIO превращает байты (содержимое картинки) в файлоподобный объект.import
+from io import BytesIO                  # BytesIO превращает байты (содержимое картинки) в файлоподобный объект
                                         # Нужно, чтобы PIL.Image.open мог прочитать картинку из памяти, а не с диска.
 from PIL import Image, ImageTk          # Image — открытие/ресайз картинки;
                                         # ImageTk — конвертация в формат, понятный Tkinter.
@@ -37,8 +37,9 @@ def update_fiat_label(event):
 
 
 def exchange():
-    """По клику на кнопку «Получить цену» запрашивает у CoinGecko курс выбранной криптовалюты
-    к выбранному фиату и показывает результат в диалоговом окне.
+    """По клику на кнопку «Получить цену» выполняет запрос к API и показывает результат.
+    Проверяет, что оба поля заполнены; делает GET-запрос к CoinGecko (таймаут 5 с);
+    при успехе показывает цену в диалоге, при ошибке сети/данных — сообщение об ошибке.
     """
     crypto_id = crypto_combobox.get().strip()
     fiat_code = fiat_combobox.get().strip().lower()
@@ -95,7 +96,7 @@ root.title('Курс криптовалют')
 root.geometry('360x200')
 root.configure(bg=color_bg)
 
-"""Иконка приложения"""
+# Иконка приложения
 icon_url = "https://cdn-icons-png.flaticon.com/512/4843/4843256.png"   # прямая ссылка на картинку
 try:
     response = requests.get(icon_url, timeout=5)
