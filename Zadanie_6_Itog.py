@@ -128,7 +128,7 @@ Button(
     text='Получить цену',
     command=exchange,
     bg='lightblue',
-    activebackground='darkblue',
+    activebackground='#000080',
     activeforeground='white'
 ).pack(pady=15, padx=10)
 
